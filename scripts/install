@@ -130,7 +130,6 @@ pushd "$final_path"
 	ynh_script_progression --message="Yarn install..."
 	npm install brotli
 	yarn install --pure-lockfile --prod && yarn run buildall && rm -rf node_modules && yarn cache clean
-
 popd
 
 #=================================================
