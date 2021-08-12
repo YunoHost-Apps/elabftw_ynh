@@ -131,10 +131,6 @@ pushd "$final_path"
 	npm install brotli
 	yarn install --pure-lockfile --prod && yarn run buildall && rm -rf node_modules && yarn cache clean
 
-	#yarn install
-	#yarn buildall
-	ynh_script_progression --message="Install start..."
-	#php$phpversion bin/install start
 popd
 
 #=================================================
