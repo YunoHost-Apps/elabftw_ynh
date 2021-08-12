@@ -1,0 +1,50 @@
+{
+    "name": "eLabFTW",
+    "id": "elabftw",
+    "packaging_format": 1,
+    "description": {
+        "en": "Open source electronic lab notebook for research labs",
+        "fr": "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
+    },
+    "version": "4.0.11~ynh1",
+    "url": "https://www.elabftw.net",
+    "upstream": {
+        "license": "AGPL-3.0-only",
+        "website": "https://www.elabftw.net",
+        "demo": "https://demo.elabftw.net/login.php",
+        "admindoc": "https://doc.elabftw.net/",
+        "userdoc": "https://yunohost.org/apps",
+        "code": "https://github.com/elabftw/elabftw"
+    },
+    "license": "AGPL-3.0-only",
+    "maintainer": {
+        "name": "",
+        "email": ""
+    },
+    "requirements": {
+        "yunohost": ">= 4.2.4"
+    },
+    "multi_instance": true,
+    "services": [
+        "nginx",
+        "php8.0-fpm",
+        "mysql"
+    ],
+    "arguments": {
+        "install": [{
+                "name": "domain",
+                "type": "domain",
+                "example": "example.com"
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "help": {
+                    "en": "If enabled, eLabFTW will be accessible by people who do not have an account. This can be changed later via the webadmin.",
+                    "fr": "Si cette case est cochée, eLabFTW sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+                },
+                "default": true
+            }
+        ]
+    }
+}
