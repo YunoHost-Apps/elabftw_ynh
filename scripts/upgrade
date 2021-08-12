@@ -22,6 +22,7 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 phpversion=$(ynh_app_setting_get --app=$app --key=phpversion)
+secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
 
 #=================================================
 # CHECK VERSION
@@ -113,10 +114,10 @@ ynh_add_fpm_config --package="$extra_php_dependencies"
 # MODIFY A CONFIG FILE
 #=================================================
 
-ynh_add_config --template="../conf/database.php" --destination="$final_path/app/Config/database.php"
+ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
 
-chmod 400 "$final_path/app/Config/database.php"
-chown $app "$final_path/app/Config/database.php"
+chmod 400 "$final_path/config.php"
+chown $app "$final_path/config.php"
 
 #=================================================
 # GENERIC FINALIZATION
