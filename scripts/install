@@ -14,6 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
+	read -p "debug me"
 	true
 }
 # Exit if an error occurs during the execution of the script
@@ -116,21 +117,36 @@ ynh_script_progression --message="Installing Composer..." --weight=10
 
 ynh_secure_remove --file="$final_path/composer.lock"
 ynh_install_composer
+chown -R $app "$final_path/.composer"
+chmod 777 -R "$final_path"
 
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
 #=================================================
 ynh_script_progression --message="Installing with Composer..." --weight=30
 
-chown -R $app "$final_path/.composer/"
-chmod -R 777 $final_path
-
 pushd "$final_path"
-	ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
+	ynh_script_progression --message="Composer install..."
+	ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
+
 	ynh_script_progression --message="Yarn install..."
-	npm install brotli
-	yarn install --pure-lockfile --prod && yarn run buildall && rm -rf node_modules && yarn cache clean
+	ynh_exec_warn_less npm install brotli
+	ynh_exec_warn_less yarn install --pure-lockfile --prod
+	ynh_exec_warn_less yarn run buildall
+	ynh_secure_remove node_modules
+	ynh_exec_warn_less yarn cache clean
+
+	secret_key=$(ynh_string_random --length=137)
+	ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
+
+	ynh_script_progression --message="Install start..."
+	ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
+	ynh_exec_as $app php$phpversion bin/install start -q
 popd
+
+ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
+ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
+ynh_mysql_connect_as --user=$app --password="$db_pwd" --database=$db_name < ../conf/sql
 
 #=================================================
 # GENERIC FINALIZATION
@@ -139,8 +155,9 @@ popd
 #=================================================
 ynh_script_progression --message="Securing files and directories..." --weight=1
 
-mkdir $final_path/{cache,uploads}
+mkdir -p $final_path/{cache,uploads}
 chown $app:www-data $final_path/{cache,uploads}
+chmod 750 -R "$final_path"
 chmod 700 $final_path/{cache,uploads}
 
 #=================================================

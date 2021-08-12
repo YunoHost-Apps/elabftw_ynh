@@ -1,0 +1,18 @@
+INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
+('ldap_base_dn', 'ou=users,dc=yunohost,dc=org'),
+('ldap_email', 'mail'),
+('ldap_firstname', 'givenname'),
+('ldap_host', 'localhost'),
+('ldap_lastname', 'sn'),
+('ldap_password', NULL),
+('ldap_port', '389'),
+('ldap_team', ''),
+('ldap_toggle', '1'),
+('ldap_username', NULL),
+('ldap_use_tls', '0'),
+('mail_from', '__APP__@__DOMAIN__'),
+('mail_method', 'smtp'),
+('smtp_password', ''),
+('smtp_port', '587'),
+('smtp_username', NULL)
+ON DUPLICATE KEY UPDATE value = VALUES(value);
