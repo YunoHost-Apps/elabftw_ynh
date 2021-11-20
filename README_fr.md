@@ -24,7 +24,6 @@ Cahier de laboratoire électronique open source pour les laboratoires de recherc
 ## Documentations et ressources
 
 * Site officiel de l'app : https://www.elabftw.net
-* Documentation officielle utilisateur : https://yunohost.org/apps
 * Documentation officielle de l'admin : https://doc.elabftw.net/
 * Dépôt de code officiel de l'app : https://github.com/elabftw/elabftw
 * Documentation YunoHost pour cette app : https://yunohost.org/app_elabftw

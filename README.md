@@ -28,7 +28,6 @@ Open source electronic lab notebook for research labs
 ## Documentation and resources
 
 * Official app website: https://www.elabftw.net
-* Official user documentation: https://yunohost.org/apps
 * Official admin documentation: https://doc.elabftw.net/
 * Upstream app code repository: https://github.com/elabftw/elabftw
 * YunoHost documentation for this app: https://yunohost.org/app_elabftw
