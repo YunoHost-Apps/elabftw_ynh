@@ -50,6 +50,13 @@ ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 
 #=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=1
+
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # STANDARD MODIFICATIONS
 #=================================================
 # CREATE A MYSQL DATABASE
@@ -117,6 +124,7 @@ ynh_script_progression --message="Installing Composer..." --weight=10
 
 ynh_secure_remove --file="$final_path/composer.lock"
 ynh_install_composer
+
 chown -R $app "$final_path/.composer"
 chmod 777 -R "$final_path"
 
