@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Open source electronic lab notebook for research labs
 
-**Shipped version:** 4.2.1~ynh1
+**Shipped version:** 4.2.2~ynh1
 
 **Demo:** https://demo.elabftw.net/login.php
 

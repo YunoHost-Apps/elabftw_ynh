@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Cahier de laboratoire électronique open source pour les laboratoires de recherche
 
-**Version incluse :** 4.2.1~ynh1
+**Version incluse :** 4.2.2~ynh1
 
 **Démo :** https://demo.elabftw.net/login.php
 
