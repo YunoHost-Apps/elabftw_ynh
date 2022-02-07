@@ -125,7 +125,7 @@ ynh_script_progression --message="Installing Composer..." --weight=10
 
 ynh_secure_remove --file="$final_path/composer.lock"
 
-ynh_install_composer --install_args="--ignore-platform-reqs"
+ynh_install_composer --install_args="--no-dev"
 
 chown -R $app "$final_path/.composer"
 chmod 777 -R "$final_path"
@@ -140,11 +140,11 @@ pushd "$final_path"
 	ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
 
 	ynh_script_progression --message="Yarn install..."
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install brotli
+	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install brotli
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
-	ynh_secure_remove node_modules
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
+	#ynh_secure_remove node_modules
+	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
 
 	secret_key=$(ynh_string_random --length=137)
 	ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
