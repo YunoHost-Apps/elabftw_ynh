@@ -140,7 +140,7 @@ pushd "$final_path"
 	ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
 
 	ynh_script_progression --message="Yarn install..."
-	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install brotli
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
 	#ynh_secure_remove node_modules
