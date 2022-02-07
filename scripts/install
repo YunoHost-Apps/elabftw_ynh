@@ -124,7 +124,8 @@ ynh_add_fpm_config
 ynh_script_progression --message="Installing Composer..." --weight=10
 
 ynh_secure_remove --file="$final_path/composer.lock"
-ynh_install_composer
+
+ynh_install_composer --install_args="--ignore-platform-reqs"
 
 chown -R $app "$final_path/.composer"
 chmod 777 -R "$final_path"
