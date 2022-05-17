@@ -134,6 +134,43 @@ ynh_script_progression --message="Upgrading PHP-FPM configuration..." --weight=2
 ynh_add_fpm_config --phpversion=$phpversion --usage=$fpm_usage --footprint=$fpm_footprint
 
 #=================================================
+# INSTALL AND INITIALIZE COMPOSER
+#=================================================
+ynh_script_progression --message="Installing Composer..." --weight=10
+
+ynh_install_composer --install_args="--no-dev"
+
+#=================================================
+# INSTALL AND INITIALIZE COMPOSER
+#=================================================
+ynh_script_progression --message="Installing $app..." --weight=30
+
+pushd "$final_path"
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
+
+	ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
+	
+	ynh_secure_remove node_modules
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
+
+	#ynh_exec_as $app php$phpversion bin/console db:update start -q
+popd
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+# SECURE FILES AND DIRECTORIES
+#=================================================
+ynh_script_progression --message="Securing files and directories..." --weight=1
+
+mkdir -p $final_path/{cache,uploads}
+
+chmod 755 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
+#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX
