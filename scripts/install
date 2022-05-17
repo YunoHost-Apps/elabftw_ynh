@@ -123,12 +123,12 @@ ynh_add_fpm_config --usage=low --footprint=low
 #=================================================
 ynh_script_progression --message="Installing Composer..." --weight=10
 
-ynh_secure_remove --file="$final_path/composer.lock"
+#ynh_secure_remove --file="$final_path/composer.lock"
 
 ynh_install_composer --install_args="--no-dev"
 
-chown -R $app "$final_path/.composer"
-chmod 777 -R "$final_path"
+#chown -R $app "$final_path/.composer"
+#chmod 777 -R "$final_path"
 
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
@@ -136,10 +136,8 @@ chmod 777 -R "$final_path"
 ynh_script_progression --message="Installing with Composer..." --weight=30
 
 pushd "$final_path"
-	ynh_script_progression --message="Composer install..."
 	#ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
-
-ynh_composer_exec phpversion=$phpversion --workdir=$final_path --commands="install --prefer-dist --no-progress --no-dev"
+	ynh_composer_exec phpversion=$phpversion --workdir=$final_path --commands="install --prefer-dist --no-progress --no-dev"
 
 	ynh_script_progression --message="Yarn install..."
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
@@ -158,7 +156,7 @@ popd
 
 ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
 ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
-ynh_mysql_connect_as --user=$app --password="$db_pwd" --database=$db_name < ../conf/sql
+ynh_mysql_connect_as --user=$db_user --password="$db_pwd" --database=$db_name < ../conf/sql
 
 #=================================================
 # GENERIC FINALIZATION
