@@ -155,9 +155,13 @@ popd
 ynh_script_progression --message="Securing files and directories..." --weight=1
 
 mkdir -p $final_path/{cache,uploads}
-chown $app:www-data $final_path/{cache,uploads}
-chmod 750 -R "$final_path"
-chmod 700 $final_path/{cache,uploads}
+#chown $app:www-data $final_path/{cache,uploads}
+#chmod 750 -R "$final_path"
+#chmod 700 $final_path/{cache,uploads}
+
+chmod 755 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 #=================================================
 # SETUP SSOWAT
