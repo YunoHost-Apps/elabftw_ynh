@@ -131,9 +131,6 @@ ynh_install_composer --install_args="--no-dev"
 ynh_script_progression --message="Installing $app..." --weight=30
 
 pushd "$final_path"
-	
-
-	ynh_script_progression --message="Yarn install..."
 	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
@@ -143,7 +140,8 @@ pushd "$final_path"
 
 	ynh_script_progression --message="Install start..."
 	ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
-	ynh_exec_as $app php$phpversion bin/install start -q
+	#sed -i '' 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' "$final_path/conf/sql/db.sql"
+	#ynh_exec_as $app php$phpversion bin/install start -q
 popd
 
 ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
