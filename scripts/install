@@ -144,9 +144,9 @@ pushd "$final_path"
 	#ynh_exec_as $app php$phpversion bin/install start -q
 popd
 
-ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
-ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
-ynh_mysql_connect_as --user=$db_user --password="$db_pwd" --database=$db_name < ../conf/sql
+#ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
+#ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
+#ynh_mysql_connect_as --user=$db_user --password="$db_pwd" --database=$db_name < ../conf/sql
 
 #=================================================
 # GENERIC FINALIZATION
