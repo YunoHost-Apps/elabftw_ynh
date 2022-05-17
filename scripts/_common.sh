@@ -27,19 +27,15 @@ pkg_dependencies="brotli \
     php${YNH_PHP_VERSION}-ldap \
     php${YNH_PHP_VERSION}-mbstring \
     php${YNH_PHP_VERSION}-opcache \
-    php${YNH_PHP_VERSION}-openssl \
     php${YNH_PHP_VERSION}-mysql \
-    php${YNH_PHP_VERSION}-pecl-imagick \
+    php${YNH_PHP_VERSION}-imagick \
     php${YNH_PHP_VERSION}-phar \
     php${YNH_PHP_VERSION}-redis \
     php${YNH_PHP_VERSION}-simplexml \
-    php${YNH_PHP_VERSION}-session \
-    php${YNH_PHP_VERSION}-sodium \
     php${YNH_PHP_VERSION}-tokenizer \
     php${YNH_PHP_VERSION}-xml \
     php${YNH_PHP_VERSION}-xmlwriter \
-    php${YNH_PHP_VERSION}-zip \
-    php${YNH_PHP_VERSION}-zlib"
+    php${YNH_PHP_VERSION}-zip"
 
 YNH_COMPOSER_VERSION="2.2.7"
 
