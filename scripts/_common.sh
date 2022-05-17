@@ -12,7 +12,7 @@ YNH_PHP_VERSION="8.0"
 # dependencies used by the app
 pkg_dependencies="brotli \
 	zopfli \
-	php${YNH_PHP_VERSION}-bcmath \
+	php-bcmath \
     php${YNH_PHP_VERSION}-curl \
     php${YNH_PHP_VERSION}-ctype \
     php${YNH_PHP_VERSION}-dev \
