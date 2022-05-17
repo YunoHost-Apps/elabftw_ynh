@@ -28,6 +28,7 @@ domain=$YNH_APP_ARG_DOMAIN
 path_url="/"
 is_public=$YNH_APP_ARG_IS_PUBLIC
 phpversion=$YNH_PHP_VERSION
+secret_key=$(ynh_string_random --length=137)
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -49,6 +50,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
+ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -96,8 +98,6 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$final_path"
 
-#git clone -b 3.5.6 --depth 1 https://github.com/elabftw/elabftw.git $final_path
-
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:www-data "$final_path"
@@ -123,12 +123,7 @@ ynh_add_fpm_config --usage=low --footprint=low
 #=================================================
 ynh_script_progression --message="Installing Composer..." --weight=10
 
-#ynh_secure_remove --file="$final_path/composer.lock"
-
 ynh_install_composer --install_args="--no-dev"
-
-#chown -R $app "$final_path/.composer"
-#chmod 777 -R "$final_path"
 
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
@@ -136,18 +131,15 @@ ynh_install_composer --install_args="--no-dev"
 ynh_script_progression --message="Installing $app..." --weight=30
 
 pushd "$final_path"
-	#ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
-	ynh_composer_exec --commands="install --prefer-dist --no-progress --no-dev"
+	
 
 	ynh_script_progression --message="Yarn install..."
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
+	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
-	#ynh_secure_remove node_modules
-	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
-
-	secret_key=$(ynh_string_random --length=137)
-	ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
+	ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
+	ynh_secure_remove node_modules
+	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
 
 	ynh_script_progression --message="Install start..."
 	ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
