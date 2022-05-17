@@ -142,7 +142,7 @@ pushd "$final_path"
 	ynh_script_progression --message="Install start..."
 	ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
 	#sed -i '' 's/utf8mb4_0900_ai_ci/utf8mb4_unicode_ci/g' "$final_path/conf/sql/db.sql"
-	#ynh_exec_as $app php$phpversion bin/install start -q
+	ynh_exec_as $app php$phpversion bin/install start -q
 popd
 
 #ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
