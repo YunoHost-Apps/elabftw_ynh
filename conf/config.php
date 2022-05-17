@@ -5,4 +5,4 @@
             define('DB_USER', '__DB_USER__');
             define('DB_PASSWORD', '__DB_PWD__');
             define('SECRET_KEY', '__SECRET_KEY__');
-            define('SITE_URL', '__DOMAIN__');
+            define('SITE_URL', 'https://__DOMAIN__');
