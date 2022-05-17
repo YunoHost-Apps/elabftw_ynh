@@ -29,7 +29,7 @@ It lets you store and organize your research experiments easily. It also feature
 
 ## Disclaimers / important information
 
-Beware, Starting with eLabFTW 4.3.0, upstream is moving away from manual installation for a full Docker installation, which will make updating th app more difficult...
+Beware, starting with eLabFTW 4.3.0, upstream is moving away from manual installation for a full Docker installation, which will make updating th app more difficult...
 ## Documentation and resources
 
 * Official app website: https://www.elabftw.net
