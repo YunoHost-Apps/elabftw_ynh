@@ -133,11 +133,11 @@ ynh_install_composer --install_args="--no-dev"
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
 #=================================================
-ynh_script_progression --message="Installing with Composer..." --weight=30
+ynh_script_progression --message="Installing $app..." --weight=30
 
 pushd "$final_path"
 	#ynh_exec_warn_less ynh_exec_as $app php$phpversion composer.phar install --prefer-dist --no-progress --no-dev
-	ynh_composer_exec phpversion=$phpversion --workdir=$final_path --commands="install --prefer-dist --no-progress --no-dev"
+	ynh_composer_exec --commands="install --prefer-dist --no-progress --no-dev"
 
 	ynh_script_progression --message="Yarn install..."
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
