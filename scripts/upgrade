@@ -154,7 +154,7 @@ pushd "$final_path"
 	ynh_secure_remove node_modules
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
 
-	#ynh_exec_as $app php$phpversion bin/console db:update start -q
+	ynh_exec_as $app php$phpversion bin/console db:update
 popd
 
 #=================================================
