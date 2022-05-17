@@ -131,11 +131,10 @@ ynh_install_composer --install_args="--no-dev"
 ynh_script_progression --message="Installing $app..." --weight=30
 
 pushd "$final_path"
-	ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
-
-	#ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH npm install --save https://github.com/foliojs/brotli.js/tarball/master
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
+
+	ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
 
 	ynh_secure_remove node_modules
 	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
@@ -144,7 +143,7 @@ pushd "$final_path"
 	ynh_exec_as $app php$phpversion bin/install start -q
 popd
 
-ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
+#ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
 #ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
 #ynh_mysql_connect_as --user=$db_user --password="$db_pwd" --database=$db_name < ../conf/sql
 
