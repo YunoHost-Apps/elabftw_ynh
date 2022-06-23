@@ -76,6 +76,8 @@ db_user=$db_name
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 
+ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" < $final_path/src/sql/structure.sql
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
