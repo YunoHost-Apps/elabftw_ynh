@@ -103,7 +103,7 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=7
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path" --keep="$final_path/config.php"
+	ynh_setup_source --dest_dir="$final_path" --keep="config.php"
 fi
 
 chmod 750 "$final_path"
