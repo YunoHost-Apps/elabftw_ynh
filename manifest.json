@@ -6,7 +6,7 @@
         "en": "Open source electronic lab notebook for research labs",
         "fr": "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
     },
-    "version": "4.2.4~ynh1",
+    "version": "4.2.4~ynh2",
     "url": "https://www.elabftw.net",
     "upstream": {
         "license": "AGPL-3.0-only",
@@ -21,7 +21,7 @@
         "email": ""
     },
     "requirements": {
-        "yunohost": ">= 4.3.0"
+        "yunohost": ">= 11.0.9"
     },
     "multi_instance": true,
     "services": [
