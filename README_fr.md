@@ -5,15 +5,16 @@ It shall NOT be edited by hand.
 
 # eLabFTW pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/elabftw.svg)](https://dash.yunohost.org/appci/app/elabftw) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/elabftw.svg)](https://dash.yunohost.org/appci/app/elabftw) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
+
 [![Installer eLabFTW avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=elabftw)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer eLabFTW rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer eLabFTW rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 eLabFTW is an electronic lab notebook manager for research teams.
 
@@ -23,18 +24,18 @@ It lets you store and organize your research experiments easily. It also feature
 
 **Démo :** https://demo.elabftw.net/login.php
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de eLabFTW](./doc/screenshots/screen-1.jpg)
+![Capture d’écran de eLabFTW](./doc/screenshots/screen-1.jpg)
 
 ## Avertissements / informations importantes
 
 Beware, starting with eLabFTW 4.3.0, upstream is moving away from manual installation for a full Docker installation, which will make updating th app more difficult...
 ## Documentations et ressources
 
-* Site officiel de l'app : <https://www.elabftw.net>
-* Documentation officielle de l'admin : <https://doc.elabftw.net/>
-* Dépôt de code officiel de l'app : <https://github.com/elabftw/elabftw>
+* Site officiel de l’app : <https://www.elabftw.net>
+* Documentation officielle de l’admin : <https://doc.elabftw.net/>
+* Dépôt de code officiel de l’app : <https://github.com/elabftw/elabftw>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_elabftw>
 * Signaler un bug : <https://github.com/YunoHost-Apps/elabftw_ynh/issues>
 
@@ -50,4 +51,4 @@ ou
 sudo yunohost app upgrade elabftw -u https://github.com/YunoHost-Apps/elabftw_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
