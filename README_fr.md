@@ -36,7 +36,7 @@ Beware, starting with eLabFTW 4.3.0, upstream is moving away from manual install
 * Site officiel de l’app : <https://www.elabftw.net>
 * Documentation officielle de l’admin : <https://doc.elabftw.net/>
 * Dépôt de code officiel de l’app : <https://github.com/elabftw/elabftw>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_elabftw>
+* YunoHost Store: <https://apps.yunohost.org/app/elabftw>
 * Signaler un bug : <https://github.com/YunoHost-Apps/elabftw_ynh/issues>
 
 ## Informations pour les développeurs
