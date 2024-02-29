@@ -1,8 +1,6 @@
 #!/bin/bash
 
 #=================================================
-# GENERIC START
-#=================================================
 # IMPORT GENERIC HELPERS
 #=================================================
 
@@ -10,108 +8,18 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
+# INITIALIZE AND STORE SETTINGS
 #=================================================
 
-ynh_clean_setup () {
-	read -p "debug me"
-	true
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-#=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
-is_public=$YNH_APP_ARG_IS_PUBLIC
-phpversion=$YNH_PHP_VERSION
 secret_key=$(ynh_string_random --length=137)
-
-app=$YNH_APP_INSTANCE_NAME
-
-#=================================================
-# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
-#=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
-
-final_path=/var/www/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
-
-# Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
-
-#=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=1
-
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
+ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=1
-
-ynh_install_app_dependencies $pkg_dependencies
+ynh_script_progression --message="Installing NodeJS..." --weight=1
 
 ynh_install_nodejs --nodejs_version=$nodejs_version
-
-# Install Yarn
-ynh_install_extra_app_dependencies --repo="deb https://dl.yarnpkg.com/debian/ stable main" --package="yarn" --key="https://dl.yarnpkg.com/debian/pubkey.gpg"
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# CREATE A MYSQL DATABASE
-#=================================================
-ynh_script_progression --message="Creating a MySQL database..." --weight=2
-
-db_name=$(ynh_sanitize_dbid $app)
-db_user=$db_name
-ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..." --weight=2
-
-# Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-ynh_script_progression --message="Setting up source files..." --weight=7
-
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
-
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=2
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring PHP-FPM..." --weight=2
-
-# Create a dedicated PHP-FPM config
-ynh_add_fpm_config --usage=low --footprint=low
 
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
@@ -121,57 +29,53 @@ ynh_script_progression --message="Installing Composer..." --weight=10
 ynh_install_composer --install_args="--no-dev"
 
 #=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+ynh_script_progression --message="Setting up source files..." --weight=7
+
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir/sources"
+mkdir -p "$install_dir/sources/"{cache,uploads}
+
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
+#=================================================
 # INSTALL AND INITIALIZE COMPOSER
 #=================================================
 ynh_script_progression --message="Installing $app..." --weight=30
 
-pushd "$final_path"
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn install --pure-lockfile --prod
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn run buildall
+pushd "$install_dir/sources"
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
 
-	ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
-  
-	ynh_secure_remove node_modules
-	ynh_exec_warn_less ynh_exec_as $app env $ynh_node_load_PATH yarn cache clean
+    ynh_composer_exec --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
 
-	ynh_add_config --template="../conf/config.php" --destination="$final_path/config.php"
-	ynh_exec_as $app php$phpversion bin/install start -q
+    ynh_secure_remove node_modules
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
+
+    ynh_add_config --template="config.php" --destination="$install_dir/sources/config.php"
+    ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
 popd
 
-#ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
-#ynh_add_config --template="../conf/sql.template" --destination="../conf/sql"
-#ynh_mysql_connect_as --user=$db_user --password="$db_pwd" --database=$db_name < ../conf/sql
+# ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
+# ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
+# ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
+# ynh_secure_remove --file="$install_dir/ldap_sql"
+
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# GENERIC FINALIZATION
+# SYSTEM CONFIGURATION
 #=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..." --weight=1
+ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
 
-mkdir -p $final_path/{cache,uploads}
+# Create a dedicated NGINX config
+ynh_add_nginx_config
 
-chmod 755 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Configuring permissions..." --weight=1
-
-# Make app public if necessary or protect it
-if [ $is_public -eq 1 ]
-then
-	ynh_permission_update --permission="main" --add="visitors"
-fi
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-ynh_systemd_action --service_name=nginx --action=reload
+# Create a dedicated PHP-FPM config
+ynh_add_fpm_config
 
 #=================================================
 # END OF SCRIPT
