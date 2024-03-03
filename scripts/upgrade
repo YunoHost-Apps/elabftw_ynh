@@ -28,13 +28,6 @@ ynh_script_progression --message="Upgrading NodeJS..." --weight=1
 ynh_install_nodejs --nodejs_version=$nodejs_version
 
 #=================================================
-# INSTALL AND INITIALIZE COMPOSER
-#=================================================
-ynh_script_progression --message="Upgrading Composer..." --weight=10
-
-ynh_install_composer --install_args="--no-dev"
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Upgrading source files..." --weight=7
@@ -50,9 +43,11 @@ chown -R "$app:www-data" "$install_dir"
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
 #=================================================
-ynh_script_progression --message="Building $app..." --weight=30
+ynh_script_progression --message="Building $app with Composer..." --weight=30
 
 pushd "$install_dir/sources"
+    ynh_install_composer --install_args="--no-dev"
+
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
 
