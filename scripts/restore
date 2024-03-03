@@ -15,13 +15,6 @@ ynh_script_progression --message="Reinstalling NodeJS..." --weight=1
 ynh_install_nodejs --nodejs_version="$nodejs_version"
 
 #=================================================
-# INSTALL AND INITIALIZE COMPOSER
-#=================================================
-ynh_script_progression --message="Reinstalling Composer..." --weight=10
-
-ynh_install_composer --install_args="--no-dev"
-
-#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring the app main directory..." --weight=1
