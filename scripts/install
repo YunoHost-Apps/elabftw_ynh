@@ -39,7 +39,7 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression --message="Installing $app with Composer..." --weight=30
 
 pushd "$install_dir/sources"
-    ynh_install_composer --install_args="--no-dev"
+    ynh_install_composer --install_args="--no-dev" --workdir="$install_dir/sources"
 
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
