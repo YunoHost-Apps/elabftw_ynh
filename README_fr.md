@@ -19,10 +19,9 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 eLabFTW is an electronic lab notebook manager for research teams.
 
 It lets you store and organize your research experiments easily. It also features a database where any kind of objects (such as antibodies, plasmids, cell lines, boxes, etc.) can be stored. It is accessed via the browser. Several research teams can be hosted on the same installation. This means eLabFTW can be installed at the institute level and host all team members at the same place. This is what is done at Institut Curie and in several other research centers around the globe.
+**Version incluse :** 5.0.3~ynh1
 
-**Version incluse :** 4.2.4~ynh4
-
-**Démo :** https://demo.elabftw.net/login.php
+**Démo :** <https://demo.elabftw.net/login.php>
 
 ## Captures d’écran
 
@@ -30,11 +29,11 @@ It lets you store and organize your research experiments easily. It also feature
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://www.elabftw.net>
-* Documentation officielle de l’admin : <https://doc.elabftw.net/>
-* Dépôt de code officiel de l’app : <https://github.com/elabftw/elabftw>
-* YunoHost Store: <https://apps.yunohost.org/app/elabftw>
-* Signaler un bug : <https://github.com/YunoHost-Apps/elabftw_ynh/issues>
+- Site officiel de l’app : <https://www.elabftw.net>
+- Documentation officielle de l’admin : <https://doc.elabftw.net/>
+- Dépôt de code officiel de l’app : <https://github.com/elabftw/elabftw>
+- YunoHost Store : <https://apps.yunohost.org/app/elabftw>
+- Signaler un bug : <https://github.com/YunoHost-Apps/elabftw_ynh/issues>
 
 ## Informations pour les développeurs
 
