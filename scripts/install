@@ -42,7 +42,7 @@ pushd "$install_dir/sources"
     ynh_install_composer --workdir="$install_dir/sources" --install_args="--no-dev"
 
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall:prod
 
     ynh_composer_exec --workdir="$install_dir/sources" --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
 
