@@ -59,36 +59,36 @@ ram.runtime = "200M"
         "brotli",
         "zopfli",
         "php8.1",
-        "php8.1-bcmath"
-        "php8.1-curl"
-        "php8.1-ctype"
-        "php8.1-dev"
-        "php8.1-dom"
-        "php8.1-exif"
-        "php8.1-gd"
-        "php8.1-gettext"
-        "php8.1-fileinfo"
-        "php8.1-fpm"
-        "php8.1-iconv"
-        "php8.1-json"
-        "php8.1-intl"
-        "php8.1-ldap"
-        "php8.1-mbstring"
-        "php8.1-opcache"
-        "php8.1-openssl"
-        "php8.1-pdo_mysql"
-        "php8.1-pecl-imagick"
-        "php8.1-phar"
-        "php8.1-redis"
-        "php8.1-simplexml"
-        "php8.1-session"
-        "php8.1-sodium"
-        "php8.1-tokenizer"
-        "php8.1-xml"
-        "php8.1-xmlwriter"
-        "php8.1-zip"
-        "php8.1-zlib"
-        "mariadb-server"
+        "php8.1-bcmath",
+        "php8.1-curl",
+        "php8.1-ctype",
+        "php8.1-dev",
+        "php8.1-dom",
+        "php8.1-exif",
+        "php8.1-gd",
+        "php8.1-gettext",
+        "php8.1-fileinfo",
+        "php8.1-fpm",
+        "php8.1-iconv",
+        "php8.1-json",
+        "php8.1-intl",
+        "php8.1-ldap",
+        "php8.1-mbstring",
+        "php8.1-opcache",
+        "php8.1-openssl",
+        "php8.1-pdo_mysql",
+        "php8.1-pecl-imagick",
+        "php8.1-phar",
+        "php8.1-redis",
+        "php8.1-simplexml",
+        "php8.1-session",
+        "php8.1-sodium",
+        "php8.1-tokenizer",
+        "php8.1-xml",
+        "php8.1-xmlwriter",
+        "php8.1-zip",
+        "php8.1-zlib",
+        "mariadb-server",
     ]
 
 
