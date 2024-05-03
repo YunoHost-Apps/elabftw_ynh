@@ -58,7 +58,7 @@ ram.runtime = "200M"
     packages = [
         "brotli",
         "zopfli",
-        "php8.1",
+        #"php8.1",
         "php8.1-bcmath",
         "php8.1-curl",
         "php8.1-ctype",
