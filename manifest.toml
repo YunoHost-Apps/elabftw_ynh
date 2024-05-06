@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Open source electronic lab notebook for research labs"
 description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
 
-version = "4.2.4~ynh4"
+version = "5.0.4~ynh1"
 
 maintainers = []
 
@@ -42,8 +42,8 @@ ram.runtime = "200M"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/elabftw/elabftw/archive/refs/tags/4.2.4.zip"
-    sha256 = "1922b5dc3eeb6e6feb1b36a041113abb4e43cb19eb6fe5bd211440efc7ef10a4"
+    url = "https://github.com/elabftw/elabftw/archive/refs/tags/5.0.4.tar.gz"
+    sha256 = "8591aec1dee7310d0e98a10bf6f6d59c57f8749f10c16bd4c1219bbafd5639a7"
 
     autoupdate.strategy = "latest_github_release"
 
@@ -58,30 +58,37 @@ ram.runtime = "200M"
     packages = [
         "brotli",
         "zopfli",
-        "php-bcmath",
-        "php8.0-curl",
-        "php8.0-ctype",
-        "php8.0-dev",
-        "php8.0-dom",
-        "php8.0-exif",
-        "php8.0-gd",
-        "php8.0-gettext",
-        "php8.0-fileinfo",
-        "php8.0-fpm",
-        "php8.0-json",
-        "php8.0-intl",
-        "php8.0-ldap",
-        "php8.0-mbstring",
-        "php8.0-opcache",
-        "php8.0-mysql",
-        "php8.0-imagick",
-        "php8.0-phar",
-        "php8.0-redis",
-        "php8.0-simplexml",
-        "php8.0-tokenizer",
-        "php8.0-xml",
-        "php8.0-xmlwriter",
-        "php8.0-zip",
+        #"php8.1",
+        "php8.1-bcmath",
+        "php8.1-curl",
+        "php8.1-ctype",
+        "php8.1-dev",
+        "php8.1-dom",
+        "php8.1-exif",
+        "php8.1-gd",
+        "php8.1-gettext",
+        "php8.1-fileinfo",
+        "php8.1-fpm",
+        "php8.1-iconv",
+        "php8.1-json",
+        "php8.1-intl",
+        "php8.1-ldap",
+        "php8.1-mbstring",
+        "php8.1-opcache",
+        "php8.1-openssl",
+        "php8.1-pdo_mysql",
+        "php8.1-pecl-imagick",
+        "php8.1-phar",
+        "php8.1-redis",
+        "php8.1-simplexml",
+        "php8.1-session",
+        "php8.1-sodium",
+        "php8.1-tokenizer",
+        "php8.1-xml",
+        "php8.1-xmlwriter",
+        "php8.1-zip",
+        "php8.1-zlib",
+        "mariadb-server",
     ]
 
 
