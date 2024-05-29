@@ -41,13 +41,15 @@ ynh_script_progression --message="Installing $app with Composer..." --weight=30
 pushd "$install_dir/sources"
     ynh_install_composer --workdir="$install_dir/sources" --install_args="--no-dev"
 
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
+    corepack enable
+    corepack prepare pnpm@latest --activate
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" pnpm install --pure-lockfile --prod
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" pnpm run buildall
 
     ynh_composer_exec --workdir="$install_dir/sources" --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
 
     ynh_secure_remove node_modules
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
+    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" pnpm cache clean
 
     ynh_add_config --template="config.php" --destination="$install_dir/sources/config.php"
     ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
