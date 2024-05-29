@@ -82,6 +82,7 @@ ram.runtime = "200M"
         "php8.2-xml",
         "php8.2-xmlwriter",
         "php8.2-zip",
+        "mariadb-server",
     ]
 
 
