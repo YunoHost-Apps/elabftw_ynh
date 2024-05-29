@@ -22,8 +22,6 @@ It lets you store and organize your research experiments easily. It also feature
 
 **Shipped version:** 5.0.4~ynh1
 
-**Shipped version:** 4.2.4~ynh4
-
 **Demo:** <https://demo.elabftw.net/login.php>
 
 ## Screenshots
