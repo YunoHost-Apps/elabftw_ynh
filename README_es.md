@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # eLabFTW para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/elabftw.svg)](https://dash.yunohost.org/appci/app/elabftw) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/elabftw.svg)](https://ci-apps.yunohost.org/ci/apps/elabftw/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
 
 [![Instalar eLabFTW con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=elabftw)
 

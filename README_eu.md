@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # eLabFTW YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/elabftw.svg)](https://dash.yunohost.org/appci/app/elabftw) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/elabftw.svg)](https://ci-apps.yunohost.org/ci/apps/elabftw/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
 
 [![Instalatu eLabFTW YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=elabftw)
 

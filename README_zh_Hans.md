@@ -5,7 +5,7 @@
 
 # YunoHost 上的 eLabFTW
 
-[![集成程度](https://dash.yunohost.org/integration/elabftw.svg)](https://dash.yunohost.org/appci/app/elabftw) ![工作状态](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/elabftw.svg)](https://ci-apps.yunohost.org/ci/apps/elabftw/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/elabftw.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/elabftw.maintain.svg)
 
 [![使用 YunoHost 安装 eLabFTW](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=elabftw)
 
