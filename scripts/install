@@ -12,68 +12,67 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 secret_key=$(ynh_string_random --length=137)
-ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
+ynh_app_setting_set --key="secret_key" --value="$secret_key"
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing NodeJS..." --weight=1
+ynh_script_progression "Installing NodeJS..."
 
-ynh_install_nodejs --nodejs_version=$nodejs_version
+ynh_nodejs_install
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=7
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir/sources"
 mkdir -p "$install_dir/sources/"{cache,uploads}
 
-chmod -R o-rwx "$install_dir"
-chown -R "$app:www-data" "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
 #=================================================
 # INSTALL AND INITIALIZE COMPOSER
 #=================================================
-ynh_script_progression --message="Installing $app with Composer..." --weight=30
+ynh_script_progression "Installing $app with Composer..."
 
 pushd "$install_dir/sources"
-    ynh_install_composer --workdir="$install_dir/sources" --install_args="--no-dev"
+    ynh_composer_install
+ynh_composer_exec install --no-dev  # FIXMEhelpers2.1 (replace with composer_workdir=... prior to calling this helper, default is $intall_dir) --workdir="$install_dir/sources" --no-dev
 
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
+    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn install --pure-lockfile --prod
+    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn run buildall
 
-    ynh_composer_exec --workdir="$install_dir/sources" --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
+    ynh_composer_exec # FIXMEhelpers2.1 (replace with composer_workdir=... prior to calling this helper, default is $intall_dir) --workdir="$install_dir/sources" install --prefer-dist --no-cache --no-progress --no-dev -a
 
-    ynh_secure_remove node_modules
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
+    ynh_safe_rm node_modules
+    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn cache clean
 
-    ynh_add_config --template="config.php" --destination="$install_dir/sources/config.php"
-    ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
+    ynh_config_add --template="config.php" --destination="$install_dir/sources/config.php"
+    ynh_exec_as_app "php$php_version" "bin/install" start -q
 popd
 
-# ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
-# ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
-# ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
-# ynh_secure_remove --file="$install_dir/ldap_sql"
+# ynh_script_progression "Configuring LDAP and emails..."
+# ynh_config_add --template="sql.template" --destination="$install_dir/ldap_sql"
+# ynh_mysql_db_shell < "$install_dir/ldap_sql"
+# ynh_safe_rm "$install_dir/ldap_sql"
 
-chmod -R o-rwx "$install_dir"
-chown -R "$app:www-data" "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
+ynh_script_progression "Adding system configurations related to $app..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config
+ynh_config_add_phpfpm
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
