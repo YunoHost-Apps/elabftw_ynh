@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Open source electronic lab notebook for research labs"
 description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
 
-version = "4.2.4~ynh4"
+version = "5.1.9~ynh1"
 
 maintainers = []
 
@@ -42,8 +42,8 @@ ram.runtime = "200M"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/elabftw/elabftw/archive/refs/tags/4.2.4.zip"
-    sha256 = "1922b5dc3eeb6e6feb1b36a041113abb4e43cb19eb6fe5bd211440efc7ef10a4"
+    url = "https://github.com/elabftw/elabftw/archive/refs/tags/5.1.9.tar.gz"
+    sha256 = "7ae98d409a788db0ec09e880944b225add3504a66b7e736c13bebdeb89235ba0"
 
     autoupdate.strategy = "latest_github_release"
 
