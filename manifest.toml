@@ -24,8 +24,11 @@ fund = "https://github.com/sponsors/NicolasCARPi"
 yunohost = ">= 11.2"
 architectures = "all"
 multi_instance = true
+
 ldap = true
+
 sso = false
+
 disk = "50M"
 ram.build = "4000M"
 ram.runtime = "200M"
