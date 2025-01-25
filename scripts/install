@@ -11,9 +11,6 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-secret_key=$(ynh_string_random --length=137)
-ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
-
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
@@ -48,6 +45,9 @@ pushd "$install_dir/sources"
 
     ynh_secure_remove node_modules
     ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
+
+    secret_key=$(php$phpversion $install_dir/sources/web/install/generateSecretKey.php)
+    ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
     ynh_add_config --template="config.php" --destination="$install_dir/sources/config.php"
     ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
