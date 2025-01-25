@@ -19,14 +19,6 @@ ynh_remove_nginx_config
 ynh_remove_fpm_config
 
 #=================================================
-# REMOVE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Removing NodeJS..." --weight=1
-
-# Remove NodeJS
-ynh_remove_nodejs
-
-#=================================================
 # END OF SCRIPT
 #=================================================
 
