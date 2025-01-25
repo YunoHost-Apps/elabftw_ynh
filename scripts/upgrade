@@ -15,17 +15,13 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Ensuring downward compatibility..."  --weight=2
 
 # Move sources to subdir
-if [ ! -d "$install_dir/sources" ]; then
-    mkdir "$install_dir/sources"
-    find . -mindepth 1 -maxdepth 1 ! -name "sources" -exec mv -t "$install_dir/sources" "{}" +
+if [ ! -d "$install_dir/live" ]; then
+    mv "$install_dir/sources/" "$install_dir/live/"
+
+	ynh_script_progression --message="Removing NodeJS..." --weight=1
+	# Remove NodeJS
+	ynh_remove_nodejs
 fi
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Upgrading NodeJS..." --weight=1
-
-ynh_install_nodejs --nodejs_version=$nodejs_version
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -33,29 +29,29 @@ ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_script_progression --message="Upgrading source files..." --weight=7
 
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir/sources" --full_replace=1 --keep="config.php"
+ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
 
-mkdir -p "$install_dir/sources/"{cache,uploads}
+mv $install_dir/live/config.php $install_dir/config.php
+mv $install_dir/live/uploads/ $install_dir/uploads/
+ynh_secure_remove --file="$install_dir/live/"
+mkdir -p "$install_dir/live/"
+rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
+mv $install_dir/config.php $install_dir/live/config.php
+mv $install_dir/uploads/ $install_dir/live/uploads/
+
+ynh_secure_remove --file="$install_dir/docker"
+
+mkdir -p "$install_dir/live/"{cache,uploads}
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# INSTALL AND INITIALIZE COMPOSER
+# UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Building $app with Composer..." --weight=30
+ynh_script_progression --message="Updating $app's configuration files..." --weight=30
 
-pushd "$install_dir/sources"
-    ynh_install_composer --workdir="$install_dir/sources" --install_args="--no-dev"
-
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
-
-    ynh_composer_exec --workdir="$install_dir/sources" --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
-
-    ynh_secure_remove node_modules
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
-
+pushd "$install_dir/live"
     ynh_exec_as "$app" "php$phpversion" "bin/console" db:update
 popd
 

@@ -12,51 +12,39 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 #=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Installing NodeJS..." --weight=1
-
-ynh_install_nodejs --nodejs_version=$nodejs_version
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=7
 
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir/sources"
-mkdir -p "$install_dir/sources/"{cache,uploads}
+ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
+
+mkdir -p "$install_dir/live/"
+rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
+ynh_secure_remove --file="$install_dir/docker"
+
+mkdir -p "$install_dir/live/"{cache,uploads}
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
-# INSTALL AND INITIALIZE COMPOSER
+# APP INITIAL CONFIGURATION
 #=================================================
-ynh_script_progression --message="Installing $app with Composer..." --weight=30
+ynh_script_progression --message="Adding $app's configuration files..." --weight=30
 
-pushd "$install_dir/sources"
-    ynh_install_composer --workdir="$install_dir/sources" --install_args="--no-dev"
-
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn run buildall
-
-    ynh_composer_exec --workdir="$install_dir/sources" --commands="install --prefer-dist --no-cache --no-progress --no-dev -a"
-
-    ynh_secure_remove node_modules
-    ynh_exec_warn_less ynh_exec_as "$app" env "$ynh_node_load_PATH" yarn cache clean
-
-    secret_key=$(php$phpversion $install_dir/sources/web/install/generateSecretKey.php)
+pushd "$install_dir/live"
+    secret_key=$(php$phpversion $install_dir/live/web/install/generateSecretKey.php)
     ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
-    ynh_add_config --template="config.php" --destination="$install_dir/sources/config.php"
+    ynh_add_config --template="config.php" --destination="$install_dir/live/config.php"
     ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
 popd
 
-# ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
-# ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
-# ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
-# ynh_secure_remove --file="$install_dir/ldap_sql"
+ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
+ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
+ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
+ynh_secure_remove --file="$install_dir/ldap_sql"
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
