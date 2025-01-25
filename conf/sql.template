@@ -79,4 +79,4 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('ts_password', NULL),
 ('ts_share', '1'),
 ('ts_url', 'NULL'),
-('url', 'https://__DOMAIN____PATH__');
+('url', '');
