@@ -51,6 +51,9 @@ ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
 ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
 ynh_secure_remove --file="$install_dir/ldap_sql"
 
+# Create a cron file
+ynh_add_config --template="cron" --destination="/etc/cron.d/$app"
+
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
