@@ -43,6 +43,11 @@ ynh_secure_remove --file="$install_dir/docker"
 
 mkdir -p "$install_dir/live/"{cache,uploads}
 
+# Fix Unknown collation: 'utf8mb4_0900_ai_ci'
+for f in $install_dir/live/src/sql/*.sql ; do
+    ynh_replace_string --match_string="utf8mb4_0900_ai_ci" --replace_string="utf8mb4_general_ci" --target_file="$f"
+done
+
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
