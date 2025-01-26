@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Open source electronic lab notebook for research labs"
 description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
 
-version = "4.8.6~ynh1"
+version = "4.9.0~ynh1"
 
 maintainers = []
 
@@ -48,10 +48,10 @@ ram.runtime = "300M"
     format = "docker"
     extract = true
     prefetch = false
-    amd64.url = "elabftw/elabimg:4.8.6"
-    amd64.sha256 = "311266b7e6976d59a580d4461e3a50319efbb1fe47e0cf4892bde5efc9438108"
-    arm64.url = "elabftw/elabimg:4.8.6"
-    arm64.sha256 = "8999b29e6e1d2eb7fabb3be69fd644049556ab63cb327c577a10acd636166b3c"
+    amd64.url = "elabftw/elabimg:4.9.0"
+    amd64.sha256 = "d40be4e8f641a6f62c301d64f9b89a8fbc9cd7d4ef7991746717167920e7ccd8"
+    arm64.url = "elabftw/elabimg:4.9.0"
+    arm64.sha256 = "33a44f9849cf0c429f5fc652079f7ae3d7799be6cebbc1e88e6e0de44410773e"
     autoupdate.upstream = "https://github.com/elabftw/elabftw/"
     autoupdate.strategy = "latest_github_release"
 

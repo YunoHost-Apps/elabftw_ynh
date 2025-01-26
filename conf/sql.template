@@ -96,7 +96,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('saml_wantxmlvalidation', '1'),
 ('saml_x509', NULL),
 ('saml_x509_new', NULL),
-('schema', '127'),
+('schema', '129'),
 ('sendmail_path', '/usr/sbin/sendmail'),
 ('smtp_address', 'localhost'),
 ('smtp_encryption', 'none'),
