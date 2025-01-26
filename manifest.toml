@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Open source electronic lab notebook for research labs"
 description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
 
-version = "4.6.1~ynh1"
+version = "4.7.0~ynh1"
 
 maintainers = []
 
@@ -48,10 +48,10 @@ ram.runtime = "300M"
     format = "docker"
     extract = true
     prefetch = false
-    amd64.url = "elabftw/elabimg:4.6.1"
-    amd64.sha256 = "177a791d3c88b2b6140b18a47e573036d990d37b3c7960ba054584d1f74c141f"
-    arm64.url = "elabftw/elabimg:4.6.1"
-    arm64.sha256 = "c14ca1e1344c91d299c49a749fa5be56b2126862934539d95647897b8aa66aba"
+    amd64.url = "elabftw/elabimg:4.7.0"
+    amd64.sha256 = "8dada74faa177371136a219b763d28ef4351c1c4a8cab529f0512190a6630071"
+    arm64.url = "elabftw/elabimg:4.7.0"
+    arm64.sha256 = "e26e1ca7b1e52c1026c74994a21dfc610862b75b5ee8c7640a877d85eaa3c660"
     autoupdate.upstream = "https://github.com/elabftw/elabftw/"
     autoupdate.strategy = "latest_github_release"
 
@@ -80,6 +80,7 @@ ram.runtime = "300M"
         "php8.1-gettext",
         "php8.1-fileinfo",
         "php8.1-fpm",
+        "php8.1-iconv",
         "php8.1-intl",
         "php8.1-json",
         "php8.1-ldap",
