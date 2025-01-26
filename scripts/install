@@ -39,17 +39,26 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression --message="Adding $app's configuration files..." --weight=30
 
 pushd "$install_dir/live"
-    secret_key=$(php$phpversion $install_dir/live/bin/install genkey)
+    secret_key=$(php$phpversion $install_dir/live/bin/console tools:genkey)
     ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
-    ynh_add_config --template="config.php" --destination="$install_dir/live/config.php"
-    ynh_exec_as "$app" "php$phpversion" "bin/install" start -q
+    ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
+    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion bin/console db:install"
+    #ynh_exec_as "$app" "php$phpversion" "$install_dir/live/bin/console" db:install
 popd
+
+
+elabimg_version=$(ynh_app_upstream_version);
+ynh_app_setting_set --app=$app --key="elabimg_version" --value="$elabimg_version"
+
+elabimg_build_id=$(openssl rand -hex 4);
+ynh_app_setting_set --app=$app --key="elabimg_build_id" --value="$elabimg_build_id"
+
 
 ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
 ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"
-ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
-ynh_secure_remove --file="$install_dir/ldap_sql"
+#ynh_mysql_connect_as --user="$db_user" --password="$db_pwd" --database="$db_name" < "$install_dir/ldap_sql"
+#ynh_secure_remove --file="$install_dir/ldap_sql"
 
 # Create a cron file
 ynh_add_config --template="cron" --destination="/etc/cron.d/$app"

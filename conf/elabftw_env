@@ -1,0 +1,7 @@
+export DB_HOST='localhost'
+export DB_PORT='3306'
+export DB_NAME='__DB_NAME__'
+export DB_USER='__DB_USER__'
+export DB_PASSWORD='__DB_PWD__'
+export SECRET_KEY='__SECRET_KEY__'
+export SITE_URL='https://__DOMAIN____PATH__'
