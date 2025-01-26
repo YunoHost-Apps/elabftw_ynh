@@ -77,7 +77,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('smtp_address', 'localhost'),
 ('smtp_encryption', 'none'),
 ('smtp_password', ''),
-('smtp_port', '587'),
+('smtp_port', '25'),
 ('smtp_username', ''),
 ('ts_authority', 'dfn'),
 ('ts_cert', NULL),
