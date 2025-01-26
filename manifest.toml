@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Open source electronic lab notebook for research labs"
 description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
 
-version = "5.0.4~ynh1"
+version = "5.1.14~ynh1"
 
 maintainers = []
 
@@ -48,10 +48,10 @@ ram.runtime = "300M"
     format = "docker"
     extract = true
     prefetch = false
-    amd64.url = "elabftw/elabimg:5.0.4"
-    amd64.sha256 = "87f93cea663d3bdd72fe4a3d3e472656a5d5172b6963c8651bc0e632cd2e4c2f"
-    arm64.url = "elabftw/elabimg:5.0.4"
-    arm64.sha256 = "500836da47592f08daddaa63dd828703221b6eac0ee35da43add2584c7a201db"
+    amd64.url = "elabftw/elabimg:5.1.14"
+    amd64.sha256 = "a8123a8bef306a7259409f79a0c57b23d6feafe82c1d690af1579da5791a489d"
+    arm64.url = "elabftw/elabimg:5.1.14"
+    arm64.sha256 = "1b3b185cb2c35f66407f374813333492de4b141ce27d15bc3f2b08f33e542af7"
     autoupdate.upstream = "https://github.com/elabftw/elabftw/"
     autoupdate.strategy = "latest_github_release"
 
@@ -71,32 +71,32 @@ ram.runtime = "300M"
         "git",
         "nodejs",
         "openssl",
-        "php8.1",
-        "php8.1-bcmath",
-        "php8.1-curl",
-        "php8.1-ctype",
-        "php8.1-dev",
-        "php8.1-dom",
-        "php8.1-exif",
-        "php8.1-gd",
-        "php8.1-gettext",
-        "php8.1-fileinfo",
-        "php8.1-fpm",
-        "php8.1-iconv",
-        "php8.1-intl",
-        "php8.1-json",
-        "php8.1-ldap",
-        "php8.1-mbstring",
-        "php8.1-mysql",
-        "php8.1-imagick",
-        "php8.1-opcache",
-        "php8.1-phar",
-        "php8.1-redis",
-        "php8.1-simplexml",
-        "php8.1-tokenizer",
-        "php8.1-xml",
-        "php8.1-xmlwriter",
-        "php8.1-zip",
+        "php8.3",
+        "php8.3-bcmath",
+        "php8.3-curl",
+        "php8.3-ctype",
+        "php8.3-dev",
+        "php8.3-dom",
+        "php8.3-exif",
+        "php8.3-gd",
+        "php8.3-gettext",
+        "php8.3-fileinfo",
+        "php8.3-fpm",
+        "php8.3-iconv",
+        "php8.3-intl",
+        "php8.3-json",
+        "php8.3-ldap",
+        "php8.3-mbstring",
+        "php8.3-mysql",
+        "php8.3-imagick",
+        "php8.3-opcache",
+        "php8.3-phar",
+        "php8.3-redis",
+        "php8.3-simplexml",
+        "php8.3-tokenizer",
+        "php8.3-xml",
+        "php8.3-xmlwriter",
+        "php8.3-zip",
         "tzdata",
         "unzip",
         "zopfli",
