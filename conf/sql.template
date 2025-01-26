@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config` (
+  `conf_name` varchar(255) NOT NULL,
+  `conf_value` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('admins_create_users', '1'),
 ('admin_validate', '1'),
@@ -45,6 +51,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('s3_path_prefix', ''),
 ('s3_region', ''),
 ('saml_acs_binding', NULL),
+('saml_allowrepeatattributename', '0'),
 ('saml_authnrequestssigned', '0'),
 ('saml_baseurl', NULL),
 ('saml_debug', '0'),
@@ -72,13 +79,14 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('saml_wantxmlvalidation', '1'),
 ('saml_x509', NULL),
 ('saml_x509_new', NULL),
-('schema', '91'),
+('schema', '105'),
 ('sendmail_path', '/usr/sbin/sendmail'),
 ('smtp_address', 'localhost'),
 ('smtp_encryption', 'none'),
 ('smtp_password', ''),
 ('smtp_port', '587'),
 ('smtp_username', ''),
+('support_url', 'https://github.com/elabftw/elabftw/issues'),
 ('ts_authority', 'dfn'),
 ('ts_cert', NULL),
 ('ts_hash', 'sha256'),
@@ -87,3 +95,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('ts_password', NULL),
 ('ts_url', 'NULL'),
 ('uploads_storage', '1');
+
+ALTER TABLE `config`
+  ADD PRIMARY KEY (`conf_name`);
+COMMIT;
