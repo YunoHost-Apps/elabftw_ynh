@@ -30,6 +30,8 @@ for f in $install_dir/live/src/sql/*.sql ; do
     ynh_replace_string --match_string="utf8mb4_0900_ai_ci" --replace_string="utf8mb4_general_ci" --target_file="$f"
 done
 
+ynh_replace_string --match_string="'/elabftw/'" --replace_string="__DIR__.'/../../'" --target_file="$install_dir/live/src/Storage/AbstractStorage.php"
+
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
 
@@ -39,11 +41,12 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression --message="Adding $app's configuration files..." --weight=30
 
 pushd "$install_dir/live"
-    secret_key=$(php$phpversion $install_dir/live/bin/console tools:genkey)
+    #secret_key=$(php$phpversion $install_dir/live/bin/console tools:genkey)
+    secret_key=$(curl https://get.elabftw.net/?key)
     ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
     ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
-    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion bin/console db:install"
+    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion bin/init db:install"
     #ynh_exec_as "$app" "php$phpversion" "$install_dir/live/bin/console" db:install
 popd
 

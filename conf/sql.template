@@ -6,6 +6,7 @@ CREATE TABLE `config` (
 
 INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('a11y_statement', NULL),
+('a11y_statement_name', 'Accessibility statement'),
 ('admins_create_users', '1'),
 ('admins_create_users_remote_dir', '0'),
 ('admin_validate', '1'),
@@ -38,6 +39,8 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('ldap_toggle', '1'),
 ('ldap_username', ''),
 ('ldap_use_tls', '0'),
+('legal_notice', NULL),
+('legal_notice_name', 'Legal notice'),
 ('local_login', '0'),
 ('local_register', '0'),
 ('login_announcement', NULL),
@@ -51,6 +54,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('open_science', '0'),
 ('open_team', '1'),
 ('privacy_policy', NULL),
+('privacy_policy_name', 'Privacy policy'),
 ('proxy', ''),
 ('remember_me_allowed', '1'),
 ('remember_me_checked', '1'),
@@ -92,7 +96,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('saml_wantxmlvalidation', '1'),
 ('saml_x509', NULL),
 ('saml_x509_new', NULL),
-('schema', '122'),
+('schema', '127'),
 ('sendmail_path', '/usr/sbin/sendmail'),
 ('smtp_address', 'localhost'),
 ('smtp_encryption', 'none'),
@@ -102,6 +106,7 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('smtp_verify_cert', '0'),
 ('support_url', 'https://github.com/elabftw/elabftw/issues'),
 ('terms_of_service', NULL),
+('terms_of_service_name', 'Terms of service'),
 ('ts_authority', 'dfn'),
 ('ts_balance', '0'),
 ('ts_cert', NULL),
@@ -110,7 +115,8 @@ INSERT INTO `config` (`conf_name`, `conf_value`) VALUES
 ('ts_login', NULL),
 ('ts_password', NULL),
 ('ts_url', 'NULL'),
-('uploads_storage', '1');
+('uploads_storage', '1'),
+('user_msg_need_local_account_created', '');
 
 ALTER TABLE `config`
   ADD PRIMARY KEY (`conf_name`);
