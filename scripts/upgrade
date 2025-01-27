@@ -23,6 +23,12 @@ if [ ! -d "$install_dir/live" ]; then
 	ynh_remove_nodejs
 fi
 
+if [[ -f "$install_dir/config.php" ]]; then
+    ynh_secure_remove --file="$install_dir/config.php"
+    ynh_delete_file_checksum --file="$install_dir/config.php"
+    ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -31,12 +37,10 @@ ynh_script_progression --message="Upgrading source files..." --weight=7
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
 
-mv $install_dir/live/config.php $install_dir/config.php
 mv $install_dir/live/uploads/ $install_dir/uploads/
 ynh_secure_remove --file="$install_dir/live/"
 mkdir -p "$install_dir/live/"
 rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
-mv $install_dir/config.php $install_dir/live/config.php
 mv $install_dir/uploads/ $install_dir/live/uploads/
 
 ynh_secure_remove --file="$install_dir/docker"
