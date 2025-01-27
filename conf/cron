@@ -1,0 +1,2 @@
+# send elabftw notifications emails every minute
+*/1 * * * * __APP__ /usr/bin/php__PHPVERSION__ __INSTALL_DIR__/live/bin/console notifications:send
