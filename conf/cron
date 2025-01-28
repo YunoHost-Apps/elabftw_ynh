@@ -1,2 +1,4 @@
+# check for timestamp balance daily
+37 13 * * * __APP__ /usr/bin/php__PHPVERSION__ __INSTALL_DIR__/live/bin/console notifications:tsbalance
 # send elabftw notifications emails every minute
 */1 * * * * __APP__ /usr/bin/php__PHPVERSION__ __INSTALL_DIR__/live/bin/console notifications:send
