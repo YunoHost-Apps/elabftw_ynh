@@ -43,17 +43,15 @@ pushd "$install_dir/live"
     ynh_app_setting_set --app=$app --key="secret_key" --value="$secret_key"
 
     ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
-    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion bin/console db:install"
+    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion $install_dir/live/bin/console db:install"
     #ynh_exec_as "$app" "php$phpversion" "$install_dir/live/bin/console" db:install
 popd
-
 
 elabimg_version=$(ynh_app_upstream_version);
 ynh_app_setting_set --app=$app --key="elabimg_version" --value="$elabimg_version"
 
-elabimg_build_id=$(openssl rand -hex 4);
+elabimg_build_id=$(ynh_string_random --length=8 --filter="0-9a-f");
 ynh_app_setting_set --app=$app --key="elabimg_build_id" --value="$elabimg_build_id"
-
 
 ynh_script_progression --message="Configuring LDAP and emails..." --weight=2
 ynh_add_config --template="sql.template" --destination="$install_dir/ldap_sql"

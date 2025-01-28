@@ -23,10 +23,14 @@ if [ ! -d "$install_dir/live" ]; then
 	ynh_remove_nodejs
 fi
 
-if [[ -f "$install_dir/config.php" ]]; then
+if ynh_compare_current_package_version --comparison lt --version 4.5.14~ynh
+then
     ynh_secure_remove --file="$install_dir/config.php"
     ynh_delete_file_checksum --file="$install_dir/config.php"
     ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
+
+    elabimg_build_id=$(ynh_string_random --length=8 --filter="0-9a-f");
+    ynh_app_setting_set_default --app=$app --key="elabimg_build_id" --value="$elabimg_build_id"
 fi
 
 #=================================================
@@ -65,8 +69,12 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression --message="Updating $app's configuration files..." --weight=30
 
 pushd "$install_dir/live"
-    ynh_exec_as "$app" "php$phpversion" "bin/console" db:update
+    ynh_add_config --template="elabftw_env" --destination="$install_dir/elabftw_env"
+    ynh_exec_as "$app" bash -c "set -a; source '$install_dir/elabftw_env'; set +a ; php$phpversion $install_dir/live/bin/console db:update"
 popd
+
+elabimg_version=$(ynh_app_upstream_version);
+ynh_app_setting_set --app=$app --key="elabimg_version" --value="$elabimg_version"
 
 # Create a cron file
 ynh_add_config --template="cron" --destination="/etc/cron.d/$app"
