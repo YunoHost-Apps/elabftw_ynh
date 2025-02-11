@@ -52,8 +52,8 @@ ram.runtime = "300M"
     amd64.sha256 = "c868bd39b969468c7d33c582722d7bedc0e832bb436073516117556204ec1c99"
     arm64.url = "elabftw/elabimg:4.4.3"
     arm64.sha256 = "b5c7d8ebd1f48412298525ee9dec91eca458f63c02a2c98f38f2c70d3ccca940"
-    autoupdate.upstream = "https://github.com/elabftw/elabftw/"
-    autoupdate.strategy = "latest_github_release"
+    #autoupdate.upstream = "https://github.com/elabftw/elabftw/"
+    #autoupdate.strategy = "latest_github_release"
 
     [resources.system_user]
 
