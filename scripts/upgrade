@@ -6,7 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -18,9 +18,9 @@ ynh_script_progression --message="Ensuring downward compatibility..."  --weight=
 if [ ! -d "$install_dir/live" ]; then
     mv "$install_dir/sources/" "$install_dir/live/"
 
-	ynh_script_progression --message="Removing NodeJS..." --weight=1
+	#REMOVEME? ynh_script_progression --message="Removing NodeJS..." --weight=1
 	# Remove NodeJS
-	ynh_remove_nodejs
+	#REMOVEME? ynh_remove_nodejs
 fi
 
 #=================================================
