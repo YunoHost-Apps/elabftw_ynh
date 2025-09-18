@@ -9,17 +9,9 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Ensuring downward compatibility..."
 
 # Move sources to subdir
-if [ ! -d "$install_dir/sources" ]; then
-    mkdir "$install_dir/sources"
-    find . -mindepth 1 -maxdepth 1 ! -name "sources" -exec mv -t "$install_dir/sources" "{}" +
+if [ ! -d "$install_dir/live" ]; then
+    mv "$install_dir/sources/" "$install_dir/live/"
 fi
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression "Upgrading NodeJS..."
-
-ynh_nodejs_install
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -27,34 +19,44 @@ ynh_nodejs_install
 ynh_script_progression "Upgrading source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir/sources" --full_replace --keep="config.php"
+ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
 
-mkdir -p "$install_dir/sources/"{cache,uploads}
+mv $install_dir/live/config.php $install_dir/config.php
+mv $install_dir/live/uploads/ $install_dir/uploads/
+ynh_secure_remove --file="$install_dir/live/"
+mkdir -p "$install_dir/live/"
+rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
+mv $install_dir/config.php $install_dir/live/config.php
+mv $install_dir/uploads/ $install_dir/live/uploads/
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
+ynh_secure_remove --file="$install_dir/docker"
+
+mkdir -p "$install_dir/live/"{cache,uploads}
+
+# Fix Unknown collation: 'utf8mb4_0900_ai_ci'
+for f in $install_dir/live/src/sql/*.sql ; do
+    ynh_replace_string --match_string="utf8mb4_0900_ai_ci" --replace_string="utf8mb4_general_ci" --target_file="$f"
+    ynh_replace_string --match_string="SET SESSION sql_require_primary_key = 0;" --replace_string="" --target_file="$f"
+
+done
+
+ynh_replace_string --match_string="\$mysqlVersion = (int) substr(\$this->Db->getAttribute(PDO::ATTR_SERVER_VERSION) ?? '1', 0, 1);" --replace_string="\$mysqlVersion = 10;" --target_file="$install_dir/live/src/classes/Update.php"
+
 #=================================================
-# INSTALL AND INITIALIZE COMPOSER
+# UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression "Building $app with Composer..."
+ynh_script_progression "Updating $app's configuration files..."
 
-pushd "$install_dir/sources"
-    ynh_composer_install
-ynh_composer_exec install --no-dev  # FIXMEhelpers2.1 (replace with composer_workdir=... prior to calling this helper, default is $intall_dir) --workdir="$install_dir/sources" --no-dev
-
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn install --pure-lockfile --prod
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn run buildall
-
-    ynh_composer_exec # FIXMEhelpers2.1 (replace with composer_workdir=... prior to calling this helper, default is $intall_dir) --workdir="$install_dir/sources" install --prefer-dist --no-cache --no-progress --no-dev -a
-
-    ynh_safe_rm node_modules
-    ynh_hide_warnings ynh_exec_as_app node_load_PATH" yarn cache clean
-
-    ynh_exec_as_app "php$php_version" "bin/console" db:update
+pushd "$install_dir/live"
+    ynh_exec_as_app php$phpversion "bin/console" db:update
 popd
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:www-data" "$install_dir"
+# Create a cron file
+ynh_add_config --template="cron" --destination="/etc/cron.d/$app"
+
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================

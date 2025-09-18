@@ -4,7 +4,6 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 ynh_print_info "Declaring files to be backed up..."
@@ -16,12 +15,18 @@ ynh_print_info "Declaring files to be backed up..."
 ynh_backup "$install_dir"
 
 #=================================================
-# SYSTEM CONFIGURATION
+# BACKUP SYSTEM CONFIGURATION
 #=================================================
 
 ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_backup "/etc/php/$php_version/fpm/pool.d/$app.conf"
+
+#=================================================
+# BACKUP VARIOUS FILES
+#=================================================
+
+ynh_backup --src_path="/etc/cron.d/$app"
 
 #=================================================
 # BACKUP THE MYSQL DATABASE
