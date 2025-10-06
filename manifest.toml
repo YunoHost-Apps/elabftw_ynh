@@ -4,8 +4,8 @@ packaging_format = 2
 
 id = "elabftw"
 name = "eLabFTW"
-description.en = "Open source electronic lab notebook for research labs"
-description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
+description.en = "Electronic lab notebook for research labs"
+description.fr = "Cahier de note électronique pour les laboratoires de recherche"
 
 version = "4.4.3~ynh1"
 
