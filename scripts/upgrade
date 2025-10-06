@@ -16,10 +16,6 @@ ynh_script_progression --message="Ensuring downward compatibility..."  --weight=
 # Move sources to subdir
 if [ ! -d "$install_dir/live" ]; then
     mv "$install_dir/sources/" "$install_dir/live/"
-
-	#REMOVEME? ynh_script_progression --message="Removing NodeJS..." --weight=1
-	# Remove NodeJS
-	#REMOVEME? ynh_remove_nodejs
 fi
 
 #=================================================
