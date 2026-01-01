@@ -32,6 +32,9 @@ for f in $install_dir/live/src/sql/*.sql ; do
     ynh_replace --match="utf8mb4_0900_ai_ci" --replace="utf8mb4_general_ci" --file="$f"
 done
 
+chmod -R o-rwx "$install_dir"
+chown -R "$app:www-data" "$install_dir"
+
 #=================================================
 # APP INITIAL CONFIGURATION
 #=================================================
