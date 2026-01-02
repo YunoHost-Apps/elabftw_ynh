@@ -50,7 +50,7 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression "Updating $app's configuration files..."
 
 pushd "$install_dir/live"
-    ynh_exec_as_app php$phpversion "bin/console" db:update
+    ynh_exec_as_app php$php_version "bin/console" db:update
 popd
 
 # Create a cron file

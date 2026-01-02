@@ -4,8 +4,8 @@ packaging_format = 2
 
 id = "elabftw"
 name = "eLabFTW"
-description.en = "Open source electronic lab notebook for research labs"
-description.fr = "Cahier de laboratoire électronique open source pour les laboratoires de recherche"
+description.en = "Electronic lab notebook for research labs"
+description.fr = "Cahier de note électronique pour les laboratoires de recherche"
 
 version = "5.3.11~ynh1"
 
@@ -21,7 +21,7 @@ cpe = "cpe:2.3:a:elabftw:elabftw"
 fund = "https://github.com/sponsors/NicolasCARPi"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.35"
 helpers_version = "2.1"
 architectures = ["amd64","arm64"]
 multi_instance = true

@@ -8,7 +8,7 @@ It shall NOT be edited by hand.
   eLabFTW, packaged for YunoHost
 </h1>
 
-Open source electronic lab notebook for research labs
+Electronic lab notebook for research labs
 
 [![🌐 Official app website](https://img.shields.io/badge/Official_app_website-darkgreen?style=for-the-badge)](https://www.elabftw.net)
 [![App Demo](https://img.shields.io/badge/App_Demo-blue?style=for-the-badge)](https://demo.elabftw.net/login.php)
