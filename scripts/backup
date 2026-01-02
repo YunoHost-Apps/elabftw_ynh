@@ -26,7 +26,7 @@ ynh_backup "/etc/php/$php_version/fpm/pool.d/$app.conf"
 # BACKUP VARIOUS FILES
 #=================================================
 
-ynh_backup --src_path="/etc/cron.d/$app"
+ynh_backup "/etc/cron.d/$app"
 
 #=================================================
 # BACKUP THE MYSQL DATABASE
