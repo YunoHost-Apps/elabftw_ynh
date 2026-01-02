@@ -52,7 +52,7 @@ ynh_mysql_db_shell < "$install_dir/ldap_sql"
 ynh_safe_rm "$install_dir/ldap_sql"
 
 # Create a cron file
-ynh_add_config --template="cron" --destination="/etc/cron.d/$app"
+ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
