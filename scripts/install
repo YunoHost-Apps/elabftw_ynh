@@ -41,11 +41,11 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression "Adding $app's configuration files..."
 
 pushd "$install_dir/live"
-    secret_key=$(php$php_version $install_dir/live/bin/install genkey)
+    secret_key=$(php$php_version $install_dir/live/bin/init genkey)
     ynh_app_setting_set --key="secret_key" --value="$secret_key"
 
     ynh_config_add --template="config.php" --destination="$install_dir/live/config.php"
-    ynh_exec_as_app php$php_version "bin/install" start -q
+    ynh_exec_as_app php$php_version "bin/init" start -q
 popd
 
 ynh_script_progression "Configuring LDAP and emails..."
