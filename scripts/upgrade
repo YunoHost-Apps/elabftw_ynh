@@ -23,13 +23,13 @@ ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
 
 mv $install_dir/live/config.php $install_dir/config.php
 mv $install_dir/live/uploads/ $install_dir/uploads/
-ynh_secure_remove --file="$install_dir/live/"
+ynh_safe_rm "$install_dir/live/"
 mkdir -p "$install_dir/live/"
 rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
 mv $install_dir/config.php $install_dir/live/config.php
 mv $install_dir/uploads/ $install_dir/live/uploads/
 
-ynh_secure_remove --file="$install_dir/docker"
+ynh_safe_rm "$install_dir/docker"
 
 mkdir -p "$install_dir/live/"{cache,uploads}
 
