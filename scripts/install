@@ -41,7 +41,7 @@ chown -R "$app:www-data" "$install_dir"
 ynh_script_progression "Adding $app's configuration files..."
 
 pushd "$install_dir/live"
-    secret_key=$(php$php_version $install_dir/live/bin/init genkey)
+    secret_key=$(php$php_version $install_dir/live/bin/init tools:genkey)
     ynh_app_setting_set --key="secret_key" --value="$secret_key"
 
     ynh_config_add --template="config.php" --destination="$install_dir/live/config.php"
