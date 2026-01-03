@@ -1,17 +1,11 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source /usr/share/yunohost/helpers
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..."  --weight=2
+ynh_script_progression "Ensuring downward compatibility..."
 
 # Move sources to subdir
 if [ ! -d "$install_dir/live" ]; then
@@ -21,31 +15,31 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Upgrading source files..." --weight=7
+ynh_script_progression "Upgrading source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir/docker/" --source_id="docker"
 
 mv $install_dir/live/config.php $install_dir/config.php
 mv $install_dir/live/uploads/ $install_dir/uploads/
-ynh_secure_remove --file="$install_dir/live/"
+ynh_safe_rm "$install_dir/live/"
 mkdir -p "$install_dir/live/"
 rsync -a "$install_dir/docker/elabftw/" "$install_dir/live/"
 mv $install_dir/config.php $install_dir/live/config.php
 mv $install_dir/uploads/ $install_dir/live/uploads/
 
-ynh_secure_remove --file="$install_dir/docker"
+ynh_safe_rm "$install_dir/docker"
 
 mkdir -p "$install_dir/live/"{cache,uploads}
 
 # Fix Unknown collation: 'utf8mb4_0900_ai_ci'
 for f in $install_dir/live/src/sql/*.sql ; do
-    ynh_replace_string --match_string="utf8mb4_0900_ai_ci" --replace_string="utf8mb4_general_ci" --target_file="$f"
-    ynh_replace_string --match_string="SET SESSION sql_require_primary_key = 0;" --replace_string="" --target_file="$f"
+    ynh_replace --match="utf8mb4_0900_ai_ci" --replace="utf8mb4_general_ci" --file="$f"
+    ynh_replace --match="SET SESSION sql_require_primary_key = 0;" --replace="" --file="$f"
 
 done
 
-ynh_replace_string --match_string="\$mysqlVersion = (int) substr(\$this->Db->getAttribute(PDO::ATTR_SERVER_VERSION) ?? '1', 0, 1);" --replace_string="\$mysqlVersion = 10;" --target_file="$install_dir/live/src/classes/Update.php"
+ynh_replace --match="\$mysqlVersion = (int) substr(\$this->Db->getAttribute(PDO::ATTR_SERVER_VERSION) ?? '1', 0, 1);" --replace="\$mysqlVersion = 10;" --file="$install_dir/live/src/classes/Update.php"
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
@@ -53,14 +47,14 @@ chown -R "$app:www-data" "$install_dir"
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating $app's configuration files..." --weight=30
+ynh_script_progression "Updating $app's configuration files..."
 
 pushd "$install_dir/live"
-    ynh_exec_as "$app" "php$phpversion" "bin/console" db:update
+    ynh_exec_as_app php$php_version "bin/console" db:update
 popd
 
 # Create a cron file
-ynh_add_config --template="cron" --destination="/etc/cron.d/$app"
+ynh_config_add --template="cron" --destination="/etc/cron.d/$app"
 
 chmod -R o-rwx "$install_dir"
 chown -R "$app:www-data" "$install_dir"
@@ -68,16 +62,16 @@ chown -R "$app:www-data" "$install_dir"
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=1
+ynh_script_progression "Upgrading system configurations related to $app..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 # Create a dedicated PHP-FPM config
-ynh_add_fpm_config
+ynh_config_add_phpfpm
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression "Upgrade of $app completed"
