@@ -7,7 +7,7 @@ name = "eLabFTW"
 description.en = "Electronic lab notebook for research labs"
 description.fr = "Cahier de note électronique pour les laboratoires de recherche"
 
-version = "4.4.3~ynh1"
+version = "5.3.11~ynh1"
 
 maintainers = []
 
@@ -48,10 +48,10 @@ ram.runtime = "300M"
     format = "docker"
     extract = true
     prefetch = false
-    amd64.url = "elabftw/elabimg:4.4.3"
-    amd64.sha256 = "c868bd39b969468c7d33c582722d7bedc0e832bb436073516117556204ec1c99"
-    arm64.url = "elabftw/elabimg:4.4.3"
-    arm64.sha256 = "b5c7d8ebd1f48412298525ee9dec91eca458f63c02a2c98f38f2c70d3ccca940"
+    amd64.url = "elabftw/elabimg:5.3.11"
+    amd64.sha256 = "20f2e6f6dfa2c57313e515360d211ab6a971e9c240fd66dd1aea7751126e9bef"
+    arm64.url = "elabftw/elabimg:5.3.11"
+    arm64.sha256 = "20f2e6f6dfa2c57313e515360d211ab6a971e9c240fd66dd1aea7751126e9bef"
     #autoupdate.upstream = "https://github.com/elabftw/elabftw/"
     #autoupdate.strategy = "latest_github_release"
 
@@ -70,31 +70,30 @@ ram.runtime = "300M"
         "curl",
         "ghostscript",
         "openssl",
-        "php8.2",
-        "php8.2-bcmath",
-        "php8.2-curl",
-        "php8.2-ctype",
-        "php8.2-dev",
-        "php8.2-dom",
-        "php8.2-exif",
-        "php8.2-gd",
-        "php8.2-gettext",
-        "php8.2-fileinfo",
-        "php8.2-fpm",
-        "php8.2-intl",
-        "php8.2-json",
-        "php8.2-ldap",
-        "php8.2-mbstring",
-        "php8.2-mysql",
-        "php8.2-imagick",
-        "php8.2-opcache",
-        "php8.2-phar",
-        "php8.2-redis",
-        "php8.2-simplexml",
-        "php8.2-tokenizer",
-        "php8.2-xml",
-        "php8.2-xmlwriter",
-        "php8.2-zip",
+        "php8.4-bcmath",
+        "php8.4-curl",
+        "php8.4-ctype",
+        "php8.4-dev",
+        "php8.4-dom",
+        "php8.4-exif",
+        "php8.4-gd",
+        "php8.4-gettext",
+        "php8.4-fileinfo",
+        "php8.4-fpm",
+        "php8.4-intl",
+        "php8.4-json",
+        "php8.4-ldap",
+        "php8.4-mbstring",
+        "php8.4-mysql",
+        "php8.4-imagick",
+        "php8.4-opcache",
+        "php8.4-phar",
+        "php8.4-redis",
+        "php8.4-simplexml",
+        "php8.4-tokenizer",
+        "php8.4-xml",
+        "php8.4-xmlwriter",
+        "php8.4-zip",
         "tzdata",
         "unzip",
         "yarn",
